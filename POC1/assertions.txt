@@ -1,0 +1,119 @@
+```json
+[
+  {
+    "id": 1,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "The tumor microenvironment (TME) is a complex, dynamic ecosystem surrounding malignant cells."
+  },
+  {
+    "id": 2,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "The tumor microenvironment (TME) plays a crucial role in cancer initiation, progression, and metastasis."
+  },
+  {
+    "id": 3,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "The TME, the environment surrounding the cancer cells, is a heterogeneous mixture of immune cells, endothelial cells, materials secreted from cells and their organelles, and fibroblasts."
+  },
+  {
+    "id": 4,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "The tumor microenvironment (TME) is a complex biological structure surrounding tumor cells."
+  },
+  {
+    "id": 5,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "The tumor microenvironment (TME) includes blood vessels, immune cells, fibroblasts, adipocytes, and extracellular matrix (ECM)."
+  },
+  {
+    "id": 6,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "Cancer-associated fibroblasts (CAFs) represent one of the most abundant and functionally important components of the tumor stroma."
+  },
+  {
+    "id": 7,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "Cancer-associated fibroblasts (CAFs) [are] a major component of the tumor microenvironment (TME)."
+  },
+  {
+    "id": 8,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "Cancer-associated fibroblasts (CAFs) play an important role in cancer initiation, progression, and metastasis."
+  },
+  {
+    "id": 9,
+    "assertion_subtype": "Observational/Correlational",
+    "statement_text": "Unlike normal fibroblasts, CAFs exhibit markedly different characteristics."
+  },
+  {
+    "id": 10,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "These characteristics promote tumorigenesis."
+  },
+  {
+    "id": 11,
+    "assertion_subtype": "Observational/Correlational",
+    "statement_text": "CAFs, unlike normal fibroblasts (NF), are not passive bystanders."
+  },
+  {
+    "id": 12,
+    "assertion_subtype": "Observational/Correlational",
+    "statement_text": "They possess similar characteristics to myofibroblasts."
+  },
+  {
+    "id": 13,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "Myofibroblasts are the fibroblasts responsible for wound healing and chronic inflammation."
+  },
+  {
+    "id": 14,
+    "assertion_subtype": "Observational/Correlational",
+    "statement_text": "CAFs possess characteristics such as the expression of α-smooth muscle actin (α-SMA)."
+  },
+  {
+    "id": 15,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "Fibroblasts stem from a mesenchymal origin."
+  },
+  {
+    "id": 16,
+    "assertion_subtype": "Definitional/Taxonomic",
+    "statement_text": "Fibroblasts have an elongated spindle or stellate shape with a multitude of cytoplasmic projections."
+  },
+  {
+    "id": 17,
+    "assertion_subtype": "Observational/Correlational",
+    "statement_text": "Within the cytoplasm [of fibroblasts] is an abundance of rough endoplasmic reticulum (rER) and a large Golgi apparatus."
+  },
+  {
+    "id": 18,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "CAFs can originate from the activation and differentiation of quiescent fibroblasts."
+  },
+  {
+    "id": 19,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "CAFs can originate from bone marrow-derived mesenchymal stem cells."
+  },
+  {
+    "id": 20,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "CAFs can originate from epithelial cells."
+  },
+  {
+    "id": 21,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "CAFs can originate from endothelial cells."
+  },
+  {
+    "id": 22,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "The transformation from normal fibroblasts to CAFs involves complex molecular programs."
+  },
+  {
+    "id": 23,
+    "assertion_subtype": "Causal/Mechanistic",
+    "statement_text": "These programs reprogram their phenotype and function."
+  }
+]
+```
