@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from basic_data_integrity_agent import BasicDataIntegrityAgent
+from data_integrity_agent import BasicDataIntegrityAgent
 
 def create_sample_data():
     """Create sample dataset with some data quality issues"""
