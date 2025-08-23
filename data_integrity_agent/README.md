@@ -1,4 +1,4 @@
-# Basic Data Integrity Agent
+# Data Integrity Agent
 
 A simple agent for validating dataset quality, completeness, and representativeness.
 
@@ -10,7 +10,7 @@ A simple agent for validating dataset quality, completeness, and representativen
 
 ## Usage
 ```python
-from basic_data_integrity_agent import BasicDataIntegrityAgent
+from data_integrity_agent import BasicDataIntegrityAgent
 
 agent = BasicDataIntegrityAgent()
 report = agent.validate_dataset(df)
