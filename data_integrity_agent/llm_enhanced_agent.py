@@ -205,6 +205,8 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         - Specific and actionable
         - Prioritized by impact
         - Include both quick fixes and long-term improvements
+
+        Do not wrap the JSON in ```json or ```.
         """
         
         try:
