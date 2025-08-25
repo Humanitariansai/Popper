@@ -1,0 +1,67 @@
+# Data Integrity Agent Configuration
+# This file contains all validation settings and domain-specific configurations
+
+# Missing values validation settings
+missing_values:
+  enabled: true
+  threshold_percentage: 5.0  # Warning threshold
+  critical_threshold: 20.0   # Critical threshold
+
+# Outlier detection settings
+outliers:
+  enabled: true
+  method: iqr  # Options: iqr, zscore, isolation_forest
+  iqr_multiplier: 1.5
+  zscore_threshold: 3.0
+  threshold_percentage: 5.0
+
+# Distribution analysis settings
+distributions:
+  enabled: true
+  include_skewness: true
+  include_kurtosis: true
+  histogram_bins: 20
+
+# Format validation settings
+format_validation:
+  enabled: true
+  email_pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+  date_format: '%Y-%m-%d'
+  phone_pattern: '^\\+?1?\\d{9,15}$'
+
+# Range validation settings
+range_validation:
+  enabled: true
+  age_range:
+    min: 0
+    max: 150
+  score_range:
+    min: 0
+    max: 100
+  percentage_range:
+    min: 0
+    max: 100
+
+# Consistency checks settings
+consistency_checks:
+  enabled: true
+  check_duplicates: true
+  check_constants: true
+  check_logical_consistency: true
+
+# LLM settings
+llm:
+  enabled: true
+  model: gemini-1.5-flash
+  max_tokens: 1000
+  temperature: 0.1
+  timeout: 30
+
+# Output settings
+output:
+  format: json
+  include_detailed_results: true
+  include_recommendations: true
+  include_visualizations: false
+
+# General configuration (no domain-specific settings)
