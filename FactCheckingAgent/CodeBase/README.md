@@ -6,10 +6,10 @@ A comprehensive, AI-powered tool for extracting, validating, and fact-checking s
 
 - **Automated Assertion Extraction**: Uses Gemini 2.5 Flash to extract testable scientific statements from markdown chapters
 - **Intelligent Document Search**: Leverages Tavily API to find relevant peer-reviewed sources from NCBI and PubMed
-- **RAG-Enhanced Fact Checking**: Combines Retrieval-Augmented Generation with Gemini AI for accurate fact verification
-- **Batch Processing**: Efficiently processes multiple statements in batches to optimize API usage
-- **Comprehensive Output**: Generates detailed analysis with clear verdicts (Correct, Incorrect, Flagged for Review)
-- **Multiple Output Formats**: Saves results in both CSV and JSON formats for easy analysis
+- **Enhanced RAG System**: Metadata-aware Retrieval-Augmented Generation with paragraph-aware chunking for better context preservation
+- **Smart Batch Processing**: Efficiently processes multiple statements in batches with JSON-structured responses
+- **Citation-Enhanced Output**: Generates detailed analysis with clear verdicts and source citations for transparency
+- **Multiple Output Formats**: Saves results in both CSV and JSON formats with enhanced metadata
 - **Configurable Parameters**: Customizable batch sizes, chunk sizes, and search domains
 - **Robust Error Handling**: Comprehensive logging and graceful error recovery
 
@@ -79,18 +79,24 @@ CHUNK_SIZE=500
 
 ```
 scientific-fact-checker/
-├── scientific_fact_checker.py    # Main application
+├── scientific_fact_checker.py    # Main application with enhanced RAG system
 ├── requirements.txt              # Python dependencies
+├── setup.py                     # Package setup configuration
 ├── env_example.txt              # Environment variables template
 ├── README.md                    # This file
+├── LICENSE                      # Project license
 ├── .env                         # Your API keys (create this)
 ├── Chapters/                    # Input markdown chapters
+│   ├── Chapter 02_ Introduction to Cancer_ A Disease of Deregulation.md
 │   └── Chapter 03_ Cancer Epidemiology and Risk Factors.md
 ├── output/                      # Generated output files
 │   ├── fact_checking_results.csv
 │   └── detailed_fact_checking_results.json
-└── logs/                        # Application logs
-    └── fact_checker.log
+├── assertions_list.json         # Extracted testable assertions
+├── relevant_documents.json      # Search results and document content
+├── knowledge_base.txt           # Processed knowledge base
+├── rag_index.pkl               # RAG system index for efficient retrieval
+└── fact_checker.log            # Application logs
 ```
 
 ## 🚀 Usage
@@ -119,8 +125,10 @@ To process different chapters, modify the `chapter_path` variable in the `main()
 
 ```python
 # In scientific_fact_checker.py
-chapter_path = "Chapters/Your_Chapter_Name.md"
+chapter_path = "Chapters\\Chapter 02_ Introduction to Cancer_ A Disease of Deregulation.md"
 ```
+
+**Note**: The system currently processes Chapter 02 by default. Update this path to target your specific chapter file.
 
 #### Adjusting Processing Parameters
 
@@ -147,12 +155,15 @@ Contains the main results with columns:
 - **Summary (Tavily Answer)**: AI-generated summary from Tavily
 - **Relevant Docs**: List of relevant documents found
 - **Final Verdict**: Fact checking result (Correct/Incorrect/Flagged for Review)
+- **Citations**: Source URLs and references used in the analysis
 
 ### JSON Output (`output/detailed_fact_checking_results.json`)
 
 Contains detailed analysis including:
-- All CSV columns
-- **Full Analysis**: Complete Gemini response with reasoning and evidence assessment
+- All CSV columns plus enhanced metadata
+- **Full Analysis**: Complete Gemini response with structured reasoning
+- **Citations**: Array of source URLs and document references
+- **Evidence Assessment**: Detailed evaluation of source reliability and relevance
 
 ### Intermediate Files
 
@@ -182,15 +193,17 @@ The system evaluates statements using three verdicts:
 - Extracts content from relevant scientific papers
 - Builds a comprehensive knowledge base
 
-### 3. RAG-Enhanced Fact Checking
-- Uses TF-IDF vectorization to chunk the knowledge base
-- Retrieves relevant chunks for each statement
-- Combines RAG with Gemini AI for accurate fact verification
+### 3. Enhanced RAG-Based Fact Checking
+- Uses paragraph-aware chunking that respects document structure
+- Maintains source metadata (titles and URLs) for better citation tracking
+- Retrieves contextually relevant chunks with similarity scoring
+- Combines RAG with Gemini AI for accurate, citation-backed fact verification
 
-### 4. Batch Processing
-- Processes statements in configurable batches
-- Optimizes API usage and reduces costs
-- Provides real-time progress updates
+### 4. Intelligent Batch Processing
+- Processes statements in configurable batches with JSON-structured prompts
+- Optimizes API usage and reduces costs through efficient batching
+- Provides real-time progress updates with detailed batch summaries
+- Includes robust error handling and graceful fallbacks
 
 ## 🛡️ Error Handling
 
@@ -215,40 +228,60 @@ SEARCH_DOMAINS=ncbi.nlm.nih.gov,pubmed.ncbi.nlm.nih.gov,scholar.google.com,arxiv
 
 ### Modifying Fact Checking Logic
 
-To customize the fact checking criteria, edit the prompt templates in the `ScientificFactChecker` class:
+The system now uses structured JSON-based fact checking with enhanced citation support. To customize the fact checking criteria, edit the prompt templates in the `ScientificFactChecker` class:
 
 ```python
 # In _create_batch_fact_checking_prompt method
-EVALUATION_CRITERIA = """
-- Correct: The statement is factually accurate and supported by the evidence
-- Incorrect: The statement contains factual errors or contradicts the evidence
-- Flagged for Review: The statement requires additional verification
-"""
+# The system now returns structured JSON with:
+# - final_verdict: "Correct" | "Incorrect" | "Flagged for Review"
+# - reasoning: detailed justification
+# - citations: array of source URLs and references
 ```
 
 ### Adjusting RAG Parameters
 
-To modify the RAG system behavior:
+The enhanced RAG system now supports metadata-aware chunking. To modify behavior:
 
 ```python
 # In the Config class
-chunk_size = 1000  # Larger chunks for more context
-overlap = 100      # More overlap for better continuity
+chunk_size = 512   # Target words per chunk (paragraph-aware)
+overlap = 50       # Overlap between chunks
+
+# The system now automatically:
+# - Preserves paragraph structure
+# - Maintains source metadata (titles, URLs)
+# - Uses similarity scoring for better retrieval
 ```
 
 ## 📈 Performance Optimization
 
 ### API Cost Optimization
 
-- **Batch Processing**: Reduces API calls by processing multiple statements together
-- **Caching**: RAG index is saved and reused across runs
+- **Smart Batch Processing**: JSON-structured prompts reduce API calls by processing multiple statements together
+- **Persistent Caching**: RAG index with metadata is saved and reused across runs
 - **Rate Limiting**: Built-in delays prevent API rate limit issues
+- **Efficient Token Usage**: Optimized prompts minimize token consumption
 
 ### Processing Speed
 
-- **Parallel Processing**: Can be extended to process batches in parallel
-- **Index Reuse**: RAG index is persisted between runs
-- **Efficient Chunking**: Optimized text chunking for better retrieval
+- **Metadata-Aware RAG**: Enhanced retrieval system with source tracking
+- **Paragraph-Aware Chunking**: Respects document structure for better context
+- **Index Persistence**: RAG index with metadata is persisted between runs
+- **Optimized Retrieval**: Similarity-based chunk selection for relevant context
+
+## 🆕 Recent Improvements
+
+### Enhanced RAG System
+- **Metadata Preservation**: Source titles and URLs are maintained throughout the pipeline
+- **Paragraph-Aware Chunking**: Text is split respecting paragraph boundaries for better context
+- **Citation Support**: Fact checking results now include source citations
+- **Improved Retrieval**: Better similarity scoring and chunk selection
+
+### Structured Output
+- **JSON-Based Analysis**: Consistent, parseable fact checking responses
+- **Citation Tracking**: Each analysis includes relevant source URLs
+- **Robust Error Handling**: Graceful fallbacks for parsing failures
+- **Enhanced Metadata**: Detailed source information in all outputs
 
 ## 🐛 Troubleshooting
 
