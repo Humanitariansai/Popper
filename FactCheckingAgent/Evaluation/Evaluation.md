@@ -1,7 +1,5 @@
 # Fact-Checking Agent Evaluation
 
-_Generated: 2025-08-27 20:08:43_
-
 **Source file:** `Chapter 2 Fact Checking Results.csv`
 **Detected final verdict column:** `Final Verdict`
 
