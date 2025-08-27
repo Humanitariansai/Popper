@@ -85,8 +85,6 @@ scientific-fact-checker/
 ├── README.md                    # This file
 ├── .env                         # Your API keys (create this)
 ├── Chapters/                    # Input markdown chapters
-│   ├── Chapter 01_ The Building Blocks of Life_ Normal Cell Biology.md
-│   ├── Chapter 02_ Introduction to Cancer_ A Disease of Deregulation.md
 │   └── Chapter 03_ Cancer Epidemiology and Risk Factors.md
 ├── output/                      # Generated output files
 │   ├── fact_checking_results.csv
@@ -296,15 +294,6 @@ The system provides comprehensive logging:
 - **Error Tracking**: Detailed error messages with stack traces
 - **Performance Metrics**: Processing time and API usage statistics
 
-## 🤝 Contributing
-
-We welcome contributions! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
 ### Development Setup
 
@@ -319,22 +308,12 @@ pip install pytest black flake8 mypy
 
 This project is provided as-is for educational and research purposes. Please ensure compliance with the terms of service for Google Gemini and Tavily APIs.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Google Gemini AI for providing the language model capabilities
 - Tavily for web search and content extraction
 - The scientific community for peer-reviewed research content
 - Contributors and users who provide feedback and improvements
 
-## 📞 Support
-
-For questions, issues, or feature requests:
-
-1. Check the troubleshooting section above
-2. Review the logs for error details
-3. Open an issue on the repository
-4. Contact the development team
-
----
 
 **Note**: This system is designed for academic and research use. Always verify results independently and consider the limitations of AI-based fact checking systems.
