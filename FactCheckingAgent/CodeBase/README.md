@@ -87,16 +87,15 @@ scientific-fact-checker/
 ├── LICENSE                      # Project license
 ├── .env                         # Your API keys (create this)
 ├── Chapters/                    # Input markdown chapters
-│   ├── Chapter 02_ Introduction to Cancer_ A Disease of Deregulation.md
-│   └── Chapter 03_ Cancer Epidemiology and Risk Factors.md
+│   └── Chapter 02_ Introduction to Cancer_ A Disease of Deregulation.md
 ├── output/                      # Generated output files
 │   ├── fact_checking_results.csv
 │   └── detailed_fact_checking_results.json
-├── assertions_list.json         # Extracted testable assertions
-├── relevant_documents.json      # Search results and document content
-├── knowledge_base.txt           # Processed knowledge base
-├── rag_index.pkl               # RAG system index for efficient retrieval
-└── fact_checker.log            # Application logs
+├── assertions_list.json         # Extracted testable assertions - Post Run
+├── relevant_documents.json      # Search results and document content - Post Run
+├── knowledge_base.txt           # Processed knowledge base - Post Run
+├── rag_index.pkl               # RAG system index for efficient retrieval - Post Run
+└── fact_checker.log            # Application logs - Post Run
 ```
 
 ## 🚀 Usage
