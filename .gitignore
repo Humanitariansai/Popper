@@ -17,3 +17,9 @@ __pycache__/
 
 # Virtual Environment
 venv/
+
+.DS_Store
+
+*.csv
+*.json
+*.html
