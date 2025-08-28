@@ -6,15 +6,7 @@ class BasicDataIntegrityAgent:
     def __init__(self):
         self.validation_results = {}
     
-    def validate_dataset(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Main validation method"""
-        results = {
-            'missing_values': self._check_missing_values(df),
-            'outliers': self._check_outliers(df),
-            'distributions': self._analyze_distributions(df),
-            'summary': self._generate_summary(df)
-        }
-        return results
+
     
     def _check_missing_values(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Check for missing values and their impact"""
@@ -72,3 +64,30 @@ class BasicDataIntegrityAgent:
             'numeric_columns': len(df.select_dtypes(include=[np.number]).columns),
             'categorical_columns': len(df.select_dtypes(include=['object']).columns)
         }
+    
+    def _convert_to_serializable(self, obj):
+        """Convert numpy/pandas types to JSON-serializable types"""
+        if isinstance(obj, dict):
+            return {key: self._convert_to_serializable(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [self._convert_to_serializable(item) for item in obj]
+        elif isinstance(obj, (np.integer, np.int64, np.int32)):
+            return int(obj)
+        elif isinstance(obj, (np.floating, np.float64, np.float32)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif pd.isna(obj):
+            return None
+        else:
+            return obj
+    
+    def validate_dataset(self, df: pd.DataFrame) -> Dict[str, Any]:
+        """Main validation method with serializable results"""
+        results = {
+            'missing_values': self._check_missing_values(df),
+            'outliers': self._check_outliers(df),
+            'distributions': self._analyze_distributions(df),
+            'summary': self._generate_summary(df)
+        }
+        return self._convert_to_serializable(results)
