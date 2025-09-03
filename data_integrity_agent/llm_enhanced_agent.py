@@ -42,10 +42,10 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         else:
             return obj
     
-    def intelligent_validate_dataset(self, df: pd.DataFrame, domain: str = "general") -> Dict[str, Any]:
+    def intelligent_validate_dataset(self, df: pd.DataFrame) -> Dict[str, Any]:
         """ Main intelligent validation method using LLM orchestration """
         # LLM analyzes data and decides validation strategy
-        strategy = self._analyze_data_and_plan_strategy(df, domain)
+        strategy = self._analyze_data_and_plan_strategy(df)
         
         # Run validations based on LLM's decision
         validation_results = self._execute_validation_strategy(df, strategy)
@@ -54,7 +54,7 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         serializable_results = self._convert_to_serializable(validation_results)
         
         # LLM interprets results and generates insights
-        insights = self._interpret_validation_results(serializable_results, df, domain)
+        insights = self._interpret_validation_results(serializable_results, df)
         
         # Generate recommendations
         recommendations = self._generate_recommendations(serializable_results, insights)
@@ -67,7 +67,24 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
             'data_quality_score': insights.get('data_quality_score', 0)
         }
     
-    def _analyze_data_and_plan_strategy(self, df: pd.DataFrame, domain: str) -> Dict[str, Any]:
+    def _extract_json_from_response(self, response_text: str) -> str:
+        """Extract JSON from markdown-wrapped responses"""
+        import re
+        
+        # Remove markdown code blocks
+        json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', response_text, re.DOTALL)
+        if json_match:
+            return json_match.group(1)
+        
+        # If no markdown blocks, try to find JSON object
+        json_match = re.search(r'(\{.*\})', response_text, re.DOTALL)
+        if json_match:
+            return json_match.group(1)
+        
+        # If still no match, return the original text
+        return response_text
+
+    def _analyze_data_and_plan_strategy(self, df: pd.DataFrame) -> Dict[str, Any]:
         """LLM analyzes data and decides which validations to run"""
         
         prompt = f"""
@@ -77,7 +94,6 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         - Columns: {list(df.columns)}
         - Data types: {df.dtypes.to_dict()}
         - Shape: {df.shape}
-        - Domain: {domain}
         - Sample data: {df.head(3).to_dict()}
         
         Available validations:
@@ -93,18 +109,22 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
             "validations_to_run": ["list", "of", "validations"],
             "priority_order": ["ordered", "by", "importance"],
             "custom_thresholds": {{"outlier_threshold": 0.05}},
-            "reasoning": "explanation of why these validations were chosen",
-            "domain_specific_checks": ["any", "domain", "specific", "validations"]
+            "reasoning": "explanation of why these validations were chosen"
         }}
 
         Do not wrap the JSON in ```json or ```.
-        
-        Consider the domain ({domain}) and data characteristics when choosing validations.
         """
         
         try:
             response = self.model.generate_content(prompt)
-            strategy = json.loads(response.text)
+            
+            if not response.text or response.text.strip() == "":
+                print("LLM returned empty response")
+                raise ValueError("Empty response from LLM")
+            
+            # Extract JSON from potential markdown wrapping
+            json_text = self._extract_json_from_response(response.text)
+            strategy = json.loads(json_text)
             return strategy
         except Exception as e:
             print(f"LLM strategy generation failed: {e}")
@@ -113,8 +133,7 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
                 "validations_to_run": ["missing_values", "outliers", "distributions"],
                 "priority_order": ["missing_values", "outliers", "distributions"],
                 "custom_thresholds": {},
-                "reasoning": "Fallback to basic validations due to LLM error",
-                "domain_specific_checks": []
+                "reasoning": "Fallback to basic validations due to LLM error"
             }
     
     def _execute_validation_strategy(self, df: pd.DataFrame, strategy: Dict[str, Any]) -> Dict[str, Any]:
@@ -141,7 +160,7 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         
         return results
     
-    def _interpret_validation_results(self, results: Dict[str, Any], df: pd.DataFrame, domain: str) -> Dict[str, Any]:
+    def _interpret_validation_results(self, results: Dict[str, Any], df: pd.DataFrame) -> Dict[str, Any]:
         """LLM interprets validation results and generates insights"""
         
         prompt = f"""
@@ -149,7 +168,6 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         
         Validation Results: {json.dumps(results, indent=2)}
         Dataset Info: {df.shape} shape, {list(df.columns)} columns
-        Domain: {domain}
         
         Provide a JSON response with:
         {{
@@ -172,7 +190,7 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         
         try:
             response = self.model.generate_content(prompt)
-            insights = json.loads(response.text)
+            insights = json.loads(self._extract_json_from_response(response.text))
             return insights
         except Exception as e:
             print(f"LLM insights generation failed: {e}")
@@ -211,7 +229,7 @@ class LLMEnhancedDataIntegrityAgent(BasicDataIntegrityAgent):
         
         try:
             response = self.model.generate_content(prompt)
-            recommendations = json.loads(response.text)
+            recommendations = json.loads(self._extract_json_from_response(response.text))
             return recommendations
         except Exception as e:
             print(f"LLM recommendations generation failed: {e}")
