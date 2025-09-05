@@ -51,7 +51,7 @@ def main():
         
         # Run intelligent validation
         print("Running LLM-Enhanced Data Validation...")
-        results = agent.intelligent_validate_dataset(df, domain="customer_data")
+        results = agent.intelligent_validate_dataset(df)
         
         # Display results
         print("\n" + "="*50)
