@@ -1,75 +1,84 @@
-Data Validation Popper Agent
 
-This repository contains a Data Validation Popper Agent, implemented in a Jupyter Notebook. The agent is designed to automatically check datasets for common data quality issues, generate validation reports, and assist in fact-checking or integrity analysis.
+# Data Validation Agent
 
-📌 **Features**
+## 📌 Overview
 
-- **Automated Data Validation:** Detects missing values, duplicates, inconsistent formats, and outliers.
-- **Customizable Rules:** Define validation logic specific to your dataset (e.g., numeric ranges, categorical constraints).
-- **Data Integrity Reports:** Summarizes validation results in structured output for quick review.
-- **Extensible Design:** Can be extended to include domain-specific checks or integrated into larger pipelines.
+The Data Validation Agent is a Python-based tool designed to automate data validation, quality checks, and model validation reporting. It ensures datasets meet required standards and produces detailed validation reports with visualizations such as confusion matrices, ROC/PR curves, calibration plots, and feature importance analysis.
 
-🗂 **Project Structure**
+The agent supports:
+- Automated dataset validation with custom rules.
+- Model performance evaluation and visualization.
+- Robustness and calibration analysis.
+- Exportable validation reports (HTML + plots).
 
-- `datavalidation_popper.ipynb`   — Main notebook containing the agent implementation
-- `README.md`                     — Project documentation
+## 📂 Project Structure
+```
+Data_Validation_Agent/
+│── main.py                        # Entry point to run the validation agent
+│── validators.py                  # Validation logic & data quality checks
+│── popper_agents.py               # Core agent logic for processing/validation
+│── report_utils.py                # Report generation utilities
+│── popper_visualisation.py        # Visualization functions (ROC, PR, etc.)
+│── loan_data_set.csv              # Sample dataset for testing
+│── datavalidation_popper.ipynb    # Jupyter notebook demo
+│── validation_report_outputs/     # Generated reports & plots
+│     ├── confusion_matrix.png
+│     ├── calibration_curve.png
+│     ├── feature_importance.png
+│     ├── robustness_curve.png
+│     ├── roc_pr_roc.png
+│     ├── roc_pr_pr.png
+│     └── validation_report.html
+```
 
-🚀 **Getting Started**
+## ⚙️ Installation
 
-1. **Clone the repository**
-	```bash
-	git clone https://github.com/your-username/datavalidation_popper.git
-	cd datavalidation_popper
-	```
+Clone the repository:
+```sh
+git clone https://github.com/yourusername/Data_Validation_Agent.git
+cd Data_Validation_Agent
+```
 
-2. **Install dependencies**
+Create a virtual environment & install dependencies:
+```sh
+python3 -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
 
-	It is recommended to use a virtual environment.
+pip install -r requirements.txt
+```
+(If requirements.txt is missing, generate one using `pip freeze > requirements.txt`.)
 
-	```bash
-	pip install -r requirements.txt
-	```
+## 🚀 Usage
 
-	Typical dependencies include:
-	- pandas
-	- numpy
-	- scikit-learn
-	- matplotlib / seaborn (optional for visualization)
-	- great-expectations (optional for advanced validation)
+Run the Validation Agent:
+```sh
+python main.py
+```
+This will:
+- Load the dataset (default: loan_data_set.csv)
+- Perform data validation & quality checks
+- Generate model validation reports
+- Save results in validation_report_outputs/
 
-3. **Run the notebook**
+### Explore with Notebook
+You can also open the Jupyter notebook:
+```sh
+jupyter notebook "datavalidation_popper (5).ipynb"
+```
 
-	Launch Jupyter Notebook or JupyterLab:
-	```bash
-	jupyter notebook
-	```
+## 📊 Example Outputs
+- Confusion Matrix
+- ROC & PR Curves
+- Calibration Curve
+- Feature Importance
+- Robustness Curve
+- Full HTML Report
 
-	Open `datavalidation_popper.ipynb` and execute the cells step by step.
+All outputs are stored in the `validation_report_outputs/` directory.
 
-⚙️ **Usage**
+## 🛠️ Customization
+- Modify `validators.py` to add or change validation rules.
+- Replace `loan_data_set.csv` with your own dataset.
+- Adjust visualization settings in `popper_visualisation.py`.
 
-- Load your dataset into the notebook (.csv, .xlsx, or database source).
-- Configure validation rules (e.g., no nulls in primary key, numeric columns within ranges).
-- Run the validation cells to generate a report of detected issues.
-- Optionally, export the results as a structured file (.csv, .json) for further processing.
-
-📊 **Example**
-
-Input dataset: Customer records
-
-Checks performed:
-- Missing customer IDs
-- Invalid email formats
-- Out-of-range ages
-
-Output: Validation summary with flagged records for correction.
-
-🔧 **Extending the Agent**
-
-- Add new validation rules as Python functions.
-- Integrate with ETL pipelines (Airflow, Prefect) for automated checks.
-- Use in conjunction with ML model pipelines to ensure training data integrity.
-
-📄 **License**
-
-MIT License (or whichever you prefer).
