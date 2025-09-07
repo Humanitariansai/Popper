@@ -298,3 +298,5 @@ update_config({
 2. **Goal decomposition**: Break complex objectives into subtasks
 3. **Multi-agent coordination**: Integration with other system components
 4. **Advanced repair strategies**: ML-based imputation and correction
+
+### Video Overview (as of 9/7/25): https://drive.google.com/file/d/1MKjxLa4YB4Ml9-EfeFiuGVCWn11hni11/view?usp=sharing
