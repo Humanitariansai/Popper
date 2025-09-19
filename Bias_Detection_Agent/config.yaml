@@ -1,0 +1,15 @@
+data_path: data/adult.csv
+fairness_thresholds:
+  di_min_ratio: 0.8
+  dp_gap_max: 0.15000000000000002
+  eo_gap_max: 0.1
+positive_label: '>50K'
+privileged_groups:
+  gender: Male
+  race: White
+protected_attributes:
+  gender: gender
+  race: race
+random_state: 42
+target: income
+test_size: 0.2
