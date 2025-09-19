@@ -396,8 +396,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🔮 Extended dataset support
 - 🔮 Advanced visualization features
 
----
-
-**Built with ❤️ by the Humanitarian AI team**
-
-*Making AI systems more fair, transparent, and inclusive for everyone.*
